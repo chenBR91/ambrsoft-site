@@ -1,0 +1,5 @@
+{
+    "auto-close-tag.activationOnLanguage": [
+        "django-html",
+      ],
+}
