@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import fields
 from . import models
 
 
@@ -25,3 +26,8 @@ class UserForm(forms.ModelForm):
         model = models.Customer
         fields = ['first_name', 'last_name', 'email', 'city', 'address', 'address_line2', 'telephone', 'zip_code', 'state']
         
+
+class ForgotForm(forms.ModelForm):
+    class Meta:
+        model = models.ForgotPassword
+        fields = ['email']

@@ -3,8 +3,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import get_user, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.core.mail import send_mail
 
-from . import forms
+from store.settings import EMAIL_HOST_USER
+from .import forms
 
 
 # Create your views here.
@@ -80,3 +82,20 @@ def user_details(request):
     else:
         form = forms.CreateUserDetail()
     return render(request, 'accounts/user-detail.html', {'form': form})
+
+
+def forgot_password(request):
+    if request.method == "POST":
+        sub = forms.ForgotForm(request.POST)
+        subject = "Wellcome to ambrsoft"
+        message = "Hope are you enjoying"
+        recepient = str(sub['email'].value())
+        send_mail(subject, message, EMAIL_HOST_USER, [recepient], fail_silently=False)
+        
+        return render(request, 'accounts/success-password.html', {'recpinet': recepient})
+    
+    else:
+        sub = forms.ForgotForm()
+
+    return render(request, 'accounts/forgot-password.html', {'form': sub})
+        
